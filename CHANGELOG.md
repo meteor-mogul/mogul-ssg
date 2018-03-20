@@ -1,5 +1,9 @@
 # CHANGELOG for mogul-ssg
 
+## [0.0.3] - 2018-03-19
+
+- Add phantomjs fetch-index.js to get images
+
 ## [0.0.2] - 2018-03-14
 
 - Clean up and comment staticify-spa.py

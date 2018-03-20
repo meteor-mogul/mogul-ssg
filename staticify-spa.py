@@ -15,6 +15,9 @@ def main():
     INDEX_PATTERN = "index.html"
     INDEX_MATCHER = re.compile(INDEX_PATTERN)
 
+    GIT_PATTERN = "/\.git.*"
+    GIT_MATCHER = re.compile(GIT_PATTERN)
+
     # Remove DDP stuff so client doesn't keep bugging server
     DDP_IMPORT_PATTERN = '(DDP = .*)'
     DDP_IMPORT_FILE = "global-imports.js"
@@ -38,6 +41,10 @@ def main():
     # Starting walking from the dir to find all files that may need to be fixed
     for dirpath, subdirs, files in os.walk(dir):
         print('--\ndirectory = ' + dirpath)
+
+        # Skip .git directories
+        if GIT_MATCHER.search(dirpath):
+            continue
 
         for filename in files:
             filepath = os.path.join(dirpath, filename)

@@ -35,13 +35,20 @@ To make your life simple, use client-side routing to follow Meteor's standard pa
 
 Once your Meteor app is working, run the `mogul-ssg.sh` script from this repo to make a copy of the `.html`, `.js`, and `.css` code that meteor bundles up for you, plus a copy of all the fonts, images and other assets your app needs.
 
-The program that does the actual copying is [`wget`](https://www.gnu.org/software/wget/).  The `mogul-ssg.sh` shell script runs `wget` with a set of arguments that makes copies all of the required files.  Then, after the SPA bundle has been generated, `mogul-ssg.sh` calls the `staticify-spa.py` script which tweaks filenames and links and removes DDP packages to make the bundle into a static SPA.
+Two programs do the actual copying.
+
+First, PhantomJS gets the `index.html` and saves the DOM after the JavaScript has had a chance to do its thing.
+
+Then [`wget`](https://www.gnu.org/software/wget/) processes the `index.html` file to get all the pre-requisites.  The `mogul-ssg.sh` shell script runs `wget` with a set of arguments that makes copies all of the required files.  Then, after the SPA bundle has been generated, `mogul-ssg.sh` calls the `staticify-spa.py` script which tweaks filenames and links and removes DDP packages to make the bundle into a static SPA.
 
 Being a work-in-progress, this is a bit more involved than ideal.  Here are the steps to get it working:
 
 1. Start two shells.
-1. Try `$ wget --version` from one of the shells to see if you already have `wget`.  If you don't: download, compile and install a recent version of [`GNU wget`](https://www.gnu.org/software/wget/).  
-1. In one of the shells, start your Meteor Mogul app.  By default it will start listening for HTTP messages on port 3000 of localhost.
+1. From one of the shells try the following steps.
+1. Try `$ phantomjs --version` to see if you already have `phantomjs`.  If you don't: download a recent version of [`PhantomJS`](http://phantomjs.org/download.html).
+1. Try `$ wget --version` to see if you already have `wget`.  If you don't: download, compile and install a recent version of [`GNU wget`](https://www.gnu.org/software/wget/).
+1. Make sure both `phantomjs` and `wget` are in your PATH.  I recommend installing them in `/usr/local/bin`.  
+1. Start your Meteor Mogul app.  By default it will start listening for HTTP messages on port 3000 of localhost.
 
 ```
 $ cd <path-to-meteor-app>
